@@ -1,554 +1,661 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Islamstudium 3.0 | Technical Blueprint</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-body { font-family: 'Inter', sans-serif; }
-.chart-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; height: 300px; max-height: 400px; }
-@media (min-width: 768px) { .chart-container { height: 350px; } }
-.glass-panel { background: rgba(255, 255, 255, 0.9); border: 1px solid #e2e8f0; backdrop-filter: blur(10px); }
-.active-tab { border-bottom: 2px solid #047857; color: #047857; font-weight: 600; }
-.transition-all { transition: all 0.3s ease; }
-#stack-title, #stack-desc, #stack-list { transition: opacity 0.2s ease; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamstudium 3.0 - Technische Migrations-Blaupause</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFAF9;
+            color: #44403C;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(231, 229, 228, 0.5);
+        }
+
+        .nav-active {
+            background-color: #F59E0B;
+            color: white;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 300ms;
+        }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
-<!-- Navigation -->
-<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-            <div class="flex items-center space-x-3">
-                <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold">I3</div>
-                <span class="font-bold text-lg tracking-tight text-slate-900">Islamstudium 3.0 <span class="text-xs font-normal text-slate-500 uppercase ml-2 px-2 py-0.5 bg-slate-100 rounded">Blueprint</span></span>
-            </div>
-            <div class="hidden md:flex space-x-8 text-sm">
-                <button onclick="scrollToSection('mission')" class="hover:text-emerald-600 transition-colors">Vision</button>
-                <button onclick="scrollToSection('stack')" class="hover:text-emerald-600 transition-colors">Architektur</button>
-                <button onclick="scrollToSection('requirements')" class="hover:text-emerald-600 transition-colors">Anforderungen</button>
-                <button onclick="scrollToSection('infrastructure')" class="hover:text-emerald-600 transition-colors">Infrastruktur</button>
-                <button onclick="scrollToSection('roadmap')" class="hover:text-emerald-600 transition-colors">Roadmap</button>
-            </div>
-            <button class="md:hidden text-slate-500" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">☰</button>
-        </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 p-4 space-y-3 shadow-lg">
-        <button onclick="scrollToSection('mission')" class="block w-full text-left py-2">Vision</button>
-        <button onclick="scrollToSection('stack')" class="block w-full text-left py-2">Architektur</button>
-        <button onclick="scrollToSection('requirements')" class="block w-full text-left py-2">Anforderungen</button>
-        <button onclick="scrollToSection('infrastructure')" class="block w-full text-left py-2">Infrastruktur</button>
-        <button onclick="scrollToSection('roadmap')" class="block w-full text-left py-2">Roadmap</button>
-    </div>
-</nav>
+<body class="bg-stone-50 text-stone-800 antialiased selection:bg-amber-100 selection:text-amber-900">
 
-<!-- Main Content -->
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
-
-    <!-- Section 1: Mission Control (Hero) -->
-    <section id="mission" class="space-y-6">
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 md:p-12 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full -mr-16 -mt-16 opacity-50 blur-3xl"></div>
-            
-            <div class="relative z-10 max-w-3xl">
-                <div class="inline-flex items-center space-x-2 bg-amber-50 border border-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-semibold mb-6">
-                    <span>⚠ Status: Legacy Migration Required</span>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-stone-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <div class="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center text-white font-bold">I
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-stone-900">Islamstudium 3.0</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
-                    Next-Generation LMS Ecosystem
-                </h1>
-                <p class="text-lg text-slate-600 leading-relaxed mb-8">
-                    Eine vollständige Transformation von einer fragilen WordPress-Struktur zu einer maßgeschneiderten <strong>Antigravity-Architektur</strong>. 
-                    Ziel ist maximale Performance, Skalierbarkeit und eine zeitlose "High-End" User Experience.
+                <div class="hidden md:flex space-x-1">
+                    <button onclick="scrollToSection('vision')"
+                        class="nav-btn px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-100 transition-all text-stone-600">Vision</button>
+                    <button onclick="scrollToSection('architecture')"
+                        class="nav-btn px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-100 transition-all text-stone-600">Architektur</button>
+                    <button onclick="scrollToSection('ux')"
+                        class="nav-btn px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-100 transition-all text-stone-600">User
+                        Experience</button>
+                    <button onclick="scrollToSection('roadmap')"
+                        class="nav-btn px-4 py-2 rounded-md text-sm font-medium hover:bg-stone-100 transition-all text-stone-600">Roadmap</button>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-stone-500 hover:text-stone-900"
+                        onclick="document.getElementById('mobile-menu').classList.toggle('hidden')"><i
+                            class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-stone-100 p-4 space-y-3 shadow-lg">
+            <button onclick="scrollToSection('vision')" class="block w-full text-left py-2">Vision</button>
+            <button onclick="scrollToSection('architecture')" class="block w-full text-left py-2">Architektur</button>
+            <button onclick="scrollToSection('ux')" class="block w-full text-left py-2">User Experience</button>
+            <button onclick="scrollToSection('roadmap')" class="block w-full text-left py-2">Roadmap</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+        <span
+            class="inline-block py-1 px-3 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold tracking-wide uppercase mb-4">Projekt
+            Blueprint</span>
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-stone-900 tracking-tight mb-6">
+            Von WordPress Monolith zu <br class="hidden sm:block" />
+            <span class="text-amber-600">Agentic Antigravity</span> Ökosystem
+        </h1>
+        <p class="mt-4 max-w-2xl mx-auto text-xl text-stone-600">
+            Die strategische Neuausrichtung für eine skalierbare, hochperformante Lernplattform.
+            Weg von <code>wp_postmeta</code> Chaos, hin zu echter Daten-Souveränität.
+        </p>
+        <div class="mt-8 flex justify-center gap-4">
+            <button onclick="scrollToSection('architecture')"
+                class="bg-stone-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-stone-800 transition-all shadow-lg hover:shadow-xl">
+                Technologie erkunden
+            </button>
+            <button onclick="scrollToSection('roadmap')"
+                class="bg-white text-stone-900 border border-stone-300 px-6 py-3 rounded-lg font-medium hover:bg-stone-50 transition-all">
+                Zeitplan ansehen
+            </button>
+        </div>
+    </header>
+
+    <!-- Section 1: Vision & Problem Analysis -->
+    <section id="vision" class="py-16 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">Strategische Notwendigkeit</h2>
+                <p class="mt-4 text-stone-600 max-w-3xl mx-auto">
+                    Das aktuelle System stößt an fundamentale Grenzen. Die Analyse des Status Quo zeigt, warum ein
+                    bloßes Update nicht ausreicht und eine vollständige Migration zu einer maßgeschneiderten Architektur
+                    unumgänglich ist.
                 </p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center hover:shadow-md transition-all cursor-pointer" onclick="highlightMetric('perf')">
-                        <div class="text-3xl font-bold text-emerald-600 mb-1">&lt;1.5s</div>
-                        <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">TTI Performance</div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Legacy State -->
+                <div class="p-8 rounded-2xl bg-stone-50 border border-stone-200">
+                    <div class="flex items-center mb-6">
+                        <div
+                            class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl mr-4">
+                            <i class="fab fa-wordpress"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-stone-900">Legacy: WordPress Limitierung</h3>
                     </div>
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center hover:shadow-md transition-all cursor-pointer" onclick="highlightMetric('tech')">
-                        <div class="text-3xl font-bold text-indigo-600 mb-1">0%</div>
-                        <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">WordPress Dependency</div>
+                    <ul class="space-y-4 text-stone-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-400 mt-1 mr-3"></i>
+                            <span><strong>Datenbank-Engpass:</strong> Komplexe Lerndaten werden in ineffizienten
+                                Key-Value-Paaren (<code>wp_postmeta</code>) gespeichert, was Skalierung
+                                verhindert.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-400 mt-1 mr-3"></i>
+                            <span><strong>Wartungs-Hölle:</strong> Abhängigkeit von >30 Plugins führt zu
+                                Sicherheitslücken und Instabilität bei jedem Update.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-times-circle text-red-400 mt-1 mr-3"></i>
+                            <span><strong>Keine Mobile App:</strong> Fehlende native Integration verhindert
+                                Push-Notifications und Offline-Learning.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Future State -->
+                <div class="p-8 rounded-2xl bg-stone-900 text-white shadow-xl relative overflow-hidden">
+                    <div
+                        class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-amber-500 rounded-full opacity-20 blur-xl">
                     </div>
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center hover:shadow-md transition-all cursor-pointer" onclick="highlightMetric('ux')">
-                        <div class="text-3xl font-bold text-amber-500 mb-1">PWA</div>
-                        <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Native Mobile Feel</div>
+                    <div class="flex items-center mb-6 relative z-10">
+                        <div
+                            class="w-12 h-12 rounded-full bg-amber-600 text-white flex items-center justify-center text-xl mr-4">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Zukunft: Antigravity Ecosystem</h3>
                     </div>
-                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center hover:shadow-md transition-all cursor-pointer" onclick="highlightMetric('db')">
-                        <div class="text-3xl font-bold text-slate-700 mb-1">SQL</div>
-                        <div class="text-xs text-slate-500 font-medium uppercase tracking-wide">Supabase Relational</div>
+                    <ul class="space-y-4 text-stone-300 relative z-10">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
+                            <span><strong>Relationales Design:</strong> Supabase (PostgreSQL) ermöglicht komplexe
+                                Abfragen für Fortschrittstracking in Millisekunden.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
+                            <span><strong>Agentic Development:</strong> Nutzung von Google Antigravity & Gemini für 10x
+                                schnellere Feature-Entwicklung und Wartung.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-amber-500 mt-1 mr-3"></i>
+                            <span><strong>Cross-Platform:</strong> Capacitor verwandelt die Web-App in native iOS &
+                                Android Apps mit Push-Funktion.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Architecture & Tech Stack -->
+    <section id="architecture" class="py-16 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">High-Performance Architektur</h2>
+                <p class="mt-4 text-stone-600 max-w-3xl">
+                    Die neue Plattform basiert auf einem "Headless"-Ansatz. Frontend und Backend sind entkoppelt, um
+                    maximale Geschwindigkeit und Flexibilität für zukünftige KI-Integrationen zu gewährleisten.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Tech Stack Grid -->
+                <div class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('nextjs')">
+                        <i class="fas fa-layer-group text-3xl text-stone-800 mb-3"></i>
+                        <h4 class="font-bold text-sm">Next.js 15</h4>
+                        <p class="text-xs text-stone-500 mt-1">Frontend Core</p>
+                    </div>
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('supabase')">
+                        <i class="fas fa-database text-3xl text-green-600 mb-3"></i>
+                        <h4 class="font-bold text-sm">Supabase</h4>
+                        <p class="text-xs text-stone-500 mt-1">Backend & Auth</p>
+                    </div>
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('capacitor')">
+                        <i class="fas fa-mobile-alt text-3xl text-blue-500 mb-3"></i>
+                        <h4 class="font-bold text-sm">Capacitor 8</h4>
+                        <p class="text-xs text-stone-500 mt-1">Mobile Native</p>
+                    </div>
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('antigravity')">
+                        <i class="fas fa-robot text-3xl text-purple-600 mb-3"></i>
+                        <h4 class="font-bold text-sm">Antigravity</h4>
+                        <p class="text-xs text-stone-500 mt-1">Dev Environment</p>
+                    </div>
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('hostinger')">
+                        <i class="fas fa-server text-3xl text-indigo-600 mb-3"></i>
+                        <h4 class="font-bold text-sm">Hostinger KVM</h4>
+                        <p class="text-xs text-stone-500 mt-1">Infrastructure</p>
+                    </div>
+                    <div class="tech-card bg-white p-6 rounded-xl border border-stone-200 cursor-pointer hover:border-amber-500 transition-all text-center"
+                        onclick="showTechDetail('mux')">
+                        <i class="fas fa-play-circle text-3xl text-pink-500 mb-3"></i>
+                        <h4 class="font-bold text-sm">Mux / Stream</h4>
+                        <p class="text-xs text-stone-500 mt-1">Video Engine</p>
                     </div>
                 </div>
-                <div id="metric-detail" class="mt-4 text-sm text-slate-500 h-6"></div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Section 2: Technical Architecture (The Stack) -->
-    <section id="stack">
-        <div class="mb-6">
-            <h2 class="text-2xl font-bold text-slate-900">Der Antigravity Tech-Stack</h2>
-            <p class="text-slate-600 mt-2 max-w-3xl">
-                Die Architektur verlässt monolithische Pfade und setzt auf einen modernen, agenten-gesteuerten JAMstack-Ansatz. 
-                Klicken Sie auf die Komponenten, um ihre Rolle im Ökosystem zu verstehen.
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <!-- Stack Visualizer -->
-            <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button onclick="updateStackInfo('antigravity')" class="stack-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-500 hover:shadow-md text-left transition-all group focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold bg-indigo-100 text-indigo-700 px-2 py-1 rounded">Orchestration</span>
-                        <span class="text-2xl">⚡</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 group-hover:text-emerald-700">Google Antigravity</h3>
-                    <p class="text-xs text-slate-500 mt-1">AI-Agent Development Environment</p>
-                </button>
-
-                <button onclick="updateStackInfo('nextjs')" class="stack-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-500 hover:shadow-md text-left transition-all group focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold bg-slate-100 text-slate-700 px-2 py-1 rounded">Frontend Core</span>
-                        <span class="text-2xl">⚛️</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 group-hover:text-emerald-700">Next.js 15+</h3>
-                    <p class="text-xs text-slate-500 mt-1">Server Components & App Router</p>
-                </button>
-
-                <button onclick="updateStackInfo('supabase')" class="stack-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-500 hover:shadow-md text-left transition-all group focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Backend / DB</span>
-                        <span class="text-2xl">🗄️</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 group-hover:text-emerald-700">Supabase</h3>
-                    <p class="text-xs text-slate-500 mt-1">PostgreSQL, Auth & Realtime</p>
-                </button>
-
-                <button onclick="updateStackInfo('capacitor')" class="stack-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-500 hover:shadow-md text-left transition-all group focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold bg-amber-100 text-amber-700 px-2 py-1 rounded">Mobile Native</span>
-                        <span class="text-2xl">📱</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 group-hover:text-emerald-700">Capacitor 8</h3>
-                    <p class="text-xs text-slate-500 mt-1">iOS & Android Deployment</p>
-                </button>
-
-                <button onclick="updateStackInfo('webgpu')" class="stack-card bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-emerald-500 hover:shadow-md text-left transition-all group focus:ring-2 focus:ring-emerald-500 focus:outline-none sm:col-span-2">
-                    <div class="flex items-center justify-between mb-3">
-                        <span class="text-xs font-bold bg-purple-100 text-purple-700 px-2 py-1 rounded">Visual FX</span>
-                        <span class="text-2xl">✨</span>
-                    </div>
-                    <h3 class="font-bold text-slate-900 group-hover:text-emerald-700">WebGPU / GSAP</h3>
-                    <p class="text-xs text-slate-500 mt-1">High-Performance Animations & 3D Atmosphere</p>
-                </button>
-            </div>
-
-            <!-- Info Panel -->
-            <div class="bg-slate-900 text-white p-6 rounded-xl shadow-lg flex flex-col justify-center min-h-[300px]">
-                <h3 id="stack-title" class="text-2xl font-bold mb-4 text-emerald-400">Wählen Sie eine Komponente</h3>
-                <p id="stack-desc" class="text-slate-300 leading-relaxed mb-6">
-                    Klicken Sie auf die Karten links, um technische Details, Migrationsvorteile und Implementierungsstrategien für jeden Teil des Tech-Stacks zu sehen.
-                </p>
-                <ul id="stack-list" class="space-y-2 text-sm text-slate-400">
-                    <li>• Ersetzt Legacy-Code</li>
-                    <li>• Maximale Skalierbarkeit</li>
-                    <li>• Zukunftssicher</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Section 3: Requirements Matrix -->
-    <section id="requirements">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-6 border-b border-slate-200 pb-4">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900">Funktionale & UX Anforderungen</h2>
-                <p class="text-slate-600 mt-1">Detaillierte Spezifikationen für LMS, Dashboard und Design.</p>
-            </div>
-            <div class="flex space-x-2 mt-4 md:mt-0">
-                <button onclick="filterReqs('all', event)" class="req-filter px-3 py-1 text-sm rounded-full bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors">Alle</button>
-                <button onclick="filterReqs('lms', event)" class="req-filter px-3 py-1 text-sm rounded-full bg-white border border-slate-200 text-slate-600 hover:border-emerald-500 transition-colors">LMS Core</button>
-                <button onclick="filterReqs('dashboard', event)" class="req-filter px-3 py-1 text-sm rounded-full bg-white border border-slate-200 text-slate-600 hover:border-emerald-500 transition-colors">Dashboard</button>
-                <button onclick="filterReqs('design', event)" class="req-filter px-3 py-1 text-sm rounded-full bg-white border border-slate-200 text-slate-600 hover:border-emerald-500 transition-colors">UI/UX & Design</button>
-            </div>
-        </div>
-
-        <div id="req-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- JS will populate this -->
-        </div>
-    </section>
-
-    <!-- Section 4: Infrastructure & Hosting -->
-    <section id="infrastructure" class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-4">Infrastruktur Evaluierung</h2>
-                <p class="text-slate-600 mb-6 leading-relaxed">
-                    Die Abkehr von Managed WordPress Hosting erfordert eine robuste VPS-Umgebung für den Node.js/Docker Stack. 
-                    Basierend auf der Analyse ist der <strong>Hostinger VPS KVM 4</strong> die optimale Wahl.
-                </p>
-                
-                <div class="space-y-4">
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center mt-1">✕</div>
-                        <div class="ml-4">
-                            <h4 class="font-bold text-slate-900">Shared Hosting / Cloud Startup</h4>
-                            <p class="text-sm text-slate-500">Zu wenig Kontrolle, "Noisy Neighbors", oft PHP-limitiert.</p>
+                <!-- Detail Panel -->
+                <div
+                    class="lg:col-span-1 bg-white p-6 rounded-xl border border-stone-200 shadow-sm flex flex-col justify-center">
+                    <div id="tech-detail-content">
+                        <div class="text-center text-stone-400">
+                            <i class="fas fa-mouse-pointer text-4xl mb-4"></i>
+                            <p>Wähle eine Technologie aus, um die Spezifikationen und Entscheidungsgrundlagen
+                                anzuzeigen.</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mt-1">✓</div>
-                        <div class="ml-4">
-                            <h4 class="font-bold text-slate-900">Empfehlung: VPS KVM 4 (Ubuntu 24.04)</h4>
-                            <p class="text-sm text-slate-500">Volle Root-Kontrolle, Docker-Ready, perfekt für Antigravity Deployments.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="flex flex-col items-center">
-                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Hosting Scoring Comparison</h3>
+
+            <!-- Performance Chart -->
+            <div class="mt-12 bg-white p-6 rounded-xl border border-stone-200">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-lg font-bold text-stone-900">Simulierte Datenbank-Performance</h3>
+                        <p class="text-sm text-stone-500">Query Latency bei 10.000 gleichzeitigen Nutzeranfragen
+                            (Student Progress)</p>
+                    </div>
+                </div>
                 <div class="chart-container">
-                    <canvas id="infraChart"></canvas>
+                    <canvas id="performanceChart"></canvas>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 5: Roadmap -->
-    <section id="roadmap" class="pb-12">
-        <div class="flex flex-col md:flex-row justify-between items-start mb-8">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900">Implementierungs-Roadmap</h2>
-                <p class="text-slate-600 mt-1">12-Wochen Plan von Discovery bis Go-Live.</p>
-            </div>
-            <div class="w-full md:w-48 mt-4 md:mt-0">
-                <div style="height: 100px;">
-                    <canvas id="roadmapDistChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="relative border-l-2 border-slate-200 ml-4 md:ml-6 space-y-12">
-            <!-- Phase 1 -->
-            <div class="relative pl-8 md:pl-12 group">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white group-hover:bg-emerald-500 transition-colors"></div>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded mr-3 w-fit">Woche 1-2</span>
-                    <h3 class="text-lg font-bold text-slate-900">Discovery & Architecture</h3>
-                </div>
-                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 ml-1">
-                    <li>Supabase Schema Finalisierung</li>
-                    <li>API Schnittstellen Definition</li>
-                    <li>High-Fidelity Wireframing</li>
-                </ul>
+    <!-- Section 3: UX & Gamification -->
+    <section id="ux" class="py-16 bg-white border-t border-stone-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-stone-900">User Experience & Rollen</h2>
+                <p class="mt-4 text-stone-600 max-w-3xl mx-auto">
+                    Das System unterscheidet strikt zwischen Lernenden und Lehrenden, vereint aber beide in einem
+                    gamifizierten, motivierenden Ökosystem.
+                </p>
             </div>
 
-            <!-- Phase 2 -->
-            <div class="relative pl-8 md:pl-12 group">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white group-hover:bg-emerald-500 transition-colors"></div>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded mr-3 w-fit">Woche 3-6</span>
-                    <h3 class="text-lg font-bold text-slate-900">Agentic Development Core</h3>
+            <!-- Role Tabs -->
+            <div class="flex justify-center mb-8">
+                <div class="bg-stone-100 p-1 rounded-lg inline-flex">
+                    <button onclick="switchRole('student')" id="tab-student"
+                        class="px-6 py-2 rounded-md text-sm font-medium bg-white text-stone-900 shadow-sm transition-all">Student</button>
+                    <button onclick="switchRole('mentor')" id="tab-mentor"
+                        class="px-6 py-2 rounded-md text-sm font-medium text-stone-500 hover:text-stone-900 transition-all">Mentor</button>
+                    <button onclick="switchRole('admin')" id="tab-admin"
+                        class="px-6 py-2 rounded-md text-sm font-medium text-stone-500 hover:text-stone-900 transition-all">Admin</button>
                 </div>
-                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 ml-1">
-                    <li>Antigravity Workspace Setup</li>
-                    <li>AI-generierte Dashboard Logik (CRUD)</li>
-                    <li>Auth & Database Integration</li>
-                </ul>
             </div>
 
-            <!-- Phase 3 -->
-            <div class="relative pl-8 md:pl-12 group">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white group-hover:bg-emerald-500 transition-colors"></div>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-2 py-0.5 rounded mr-3 w-fit">Woche 7-9</span>
-                    <h3 class="text-lg font-bold text-slate-900">High-End Frontend & Animation</h3>
+            <!-- Role Content -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div id="role-content"
+                    class="bg-stone-50 p-8 rounded-2xl border border-stone-200 h-full flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold text-stone-900 mb-4">Das Studenten-Dashboard</h3>
+                    <p class="text-stone-600 mb-4">
+                        Zentraler Hub für den Lernfortschritt. Fokus auf Motivation durch Visualisierung.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center text-stone-700"><i class="fas fa-check text-amber-500 w-6"></i>
+                            "Islamstudium 3.0" Lehrplan-Tracker</li>
+                        <li class="flex items-center text-stone-700"><i class="fas fa-check text-amber-500 w-6"></i>
+                            Gamification (Badges, Streaks)</li>
+                        <li class="flex items-center text-stone-700"><i class="fas fa-check text-amber-500 w-6"></i>
+                            Offline-Video Download (Mobile)</li>
+                        <li class="flex items-center text-stone-700"><i class="fas fa-check text-amber-500 w-6"></i>
+                            Persönliche Notizen & Lesezeichen</li>
+                    </ul>
                 </div>
-                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 ml-1">
-                    <li>GSAP/WebGL "Crazy" Animations</li>
-                    <li>Mobile First Responsiveness</li>
-                    <li>Pixel-Perfect Design Review</li>
-                </ul>
-            </div>
 
-            <!-- Phase 4 -->
-            <div class="relative pl-8 md:pl-12 group">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white group-hover:bg-emerald-500 transition-colors"></div>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-0.5 rounded mr-3 w-fit">Woche 10</span>
-                    <h3 class="text-lg font-bold text-slate-900">Migration & Mobile Wrapper</h3>
-                </div>
-                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 ml-1">
-                    <li>Datenimport aus Google Sheets</li>
-                    <li>Capacitor 8 iOS/Android Builds</li>
-                </ul>
-            </div>
+                <!-- Interactive Demo Component -->
+                <div class="bg-stone-900 p-8 rounded-2xl text-white shadow-2xl">
+                    <div class="flex justify-between items-center mb-6">
+                        <h4 class="text-lg font-medium text-stone-300">Live Gamification Demo</h4>
+                        <span id="demo-badge"
+                            class="px-3 py-1 bg-stone-700 rounded-full text-xs font-bold text-stone-400 transition-all">Anfänger</span>
+                    </div>
 
-            <!-- Phase 5 -->
-            <div class="relative pl-8 md:pl-12 group">
-                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white group-hover:bg-emerald-500 transition-colors"></div>
-                <div class="flex flex-col sm:flex-row sm:items-center mb-2">
-                    <span class="text-xs font-bold uppercase tracking-wider text-slate-600 bg-slate-100 px-2 py-0.5 rounded mr-3 w-fit">Woche 11-12</span>
-                    <h3 class="text-lg font-bold text-slate-900">QA & Go-Live</h3>
+                    <div class="mb-2 flex justify-between text-sm">
+                        <span>Kursfortschritt (Fiqh Grundlagen)</span>
+                        <span id="progress-text">0%</span>
+                    </div>
+                    <div class="w-full bg-stone-700 rounded-full h-4 mb-8 overflow-hidden">
+                        <div id="progress-bar"
+                            class="bg-gradient-to-r from-amber-600 to-amber-400 h-4 rounded-full transition-all duration-500 ease-out"
+                            style="width: 0%"></div>
+                    </div>
+
+                    <div class="space-y-3">
+                        <button onclick="updateProgress(25)"
+                            class="w-full text-left px-4 py-3 bg-stone-800 hover:bg-stone-700 rounded-lg transition-colors flex items-center group">
+                            <div
+                                class="w-6 h-6 rounded-full border-2 border-stone-500 mr-3 group-hover:border-amber-400 flex items-center justify-center">
+                                <div
+                                    class="w-3 h-3 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+                            <span class="text-stone-300 group-hover:text-white">Video Lektion 1 ansehen</span>
+                        </button>
+                        <button onclick="updateProgress(25)"
+                            class="w-full text-left px-4 py-3 bg-stone-800 hover:bg-stone-700 rounded-lg transition-colors flex items-center group">
+                            <div
+                                class="w-6 h-6 rounded-full border-2 border-stone-500 mr-3 group-hover:border-amber-400 flex items-center justify-center">
+                                <div
+                                    class="w-3 h-3 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+                            <span class="text-stone-300 group-hover:text-white">Quiz absolvieren</span>
+                        </button>
+                        <button onclick="updateProgress(25)"
+                            class="w-full text-left px-4 py-3 bg-stone-800 hover:bg-stone-700 rounded-lg transition-colors flex items-center group">
+                            <div
+                                class="w-6 h-6 rounded-full border-2 border-stone-500 mr-3 group-hover:border-amber-400 flex items-center justify-center">
+                                <div
+                                    class="w-3 h-3 bg-amber-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                                </div>
+                            </div>
+                            <span class="text-stone-300 group-hover:text-white">Hausaufgabe hochladen</span>
+                        </button>
+                    </div>
+                    <p class="mt-6 text-xs text-stone-500 text-center">Klicke auf Aufgaben, um den Level-Aufstieg zu
+                        simulieren.</p>
                 </div>
-                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 ml-1">
-                    <li>Load Testing auf VPS</li>
-                    <li>Security Audit</li>
-                    <li><strong>Finaler Launch</strong></li>
-                </ul>
             </div>
         </div>
     </section>
 
-</main>
-
-<footer class="bg-white border-t border-slate-200 py-8 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-        <p class="text-slate-500 text-sm">© 2026 Islamstudium 3.0 Project Requirements. Generated by Senior Digital Solution Architect.</p>
-    </div>
-</footer>
-
-<script>
-    // --- Data & State ---
-    const reqData = [
-        {
-            category: 'lms',
-            title: 'Netflix-Style Course Player',
-            desc: 'Video-Streaming (Mux/Cloudflare), adaptive Bitrate, "Merken"-Funktion für letzte Position.',
-            priority: 'Critical'
-        },
-        {
-            category: 'lms',
-            title: 'Fortschritt & Gamification',
-            desc: 'Visuelle Balken, Badges, Zertifikate (Auto-PDF), Lern-Streaks.',
-            priority: 'High'
-        },
-        {
-            category: 'lms',
-            title: 'Prüfungsmodul',
-            desc: 'Multiple Choice (Auto-Korrektur), Freitext mit Mentor-Review.',
-            priority: 'High'
-        },
-        {
-            category: 'dashboard',
-            title: 'Role-Based Access (RBAC)',
-            desc: 'Dynamische Ansichten für Gast, Free-Student, Paid-Student, Mentor, Admin.',
-            priority: 'Critical'
-        },
-        {
-            category: 'dashboard',
-            title: 'Smart Widgets',
-            desc: 'Quick Resume, Countdown nächste Live-Session, Ticket-Status.',
-            priority: 'Medium'
-        },
-        {
-            category: 'dashboard',
-            title: 'Global Search',
-            desc: 'Echtzeit-Suche über Kurse und Bücher (Algolia/Supabase).',
-            priority: 'Medium'
-        },
-        {
-            category: 'lms',
-            title: 'CRO: Intelligent Paywalls',
-            desc: 'Lock-Icons für Premium-Content, One-Click-Upgrade Integration.',
-            priority: 'Critical'
-        },
-        {
-            category: 'design',
-            title: '"Crazy" Animations',
-            desc: 'GSAP Scroll-Trigger, WebGPU 3D Hintergründe (Partikel/Atmosphäre), Micro-Interactions.',
-            priority: 'High'
-        },
-        {
-            category: 'design',
-            title: 'Timeless Aesthetic',
-            desc: 'Islamische Geometrie trifft Glasmorphismus. Light/Dark Mode.',
-            priority: 'High'
-        }
-    ];
-
-    const stackInfo = {
-        antigravity: {
-            title: "Google Antigravity",
-            desc: "Die Kommandozentrale. Wir nutzen Agentic AI, um Boilerplate-Code zu generieren, Tests zu schreiben und die Architektur zu validieren. Dies ersetzt manuelle Programmierung für Standard-CRUD-Aufgaben.",
-            points: ["Agent-First Development", "Automatisierte Tests", "Unified Workflow"]
-        },
-        nextjs: {
-            title: "Next.js 15+ (App Router)",
-            desc: "Das Frontend-Framework für maximale SEO und Performance. Server Components reduzieren die JavaScript-Last auf dem Client drastisch, was für Mobile wichtig ist.",
-            points: ["Server Side Rendering (SSR)", "React Server Components", "API Routes integriert"]
-        },
-        supabase: {
-            title: "Supabase (PostgreSQL)",
-            desc: "Die Ablösung für Google Sheets. Eine echte relationale Datenbank mit eingebauter Authentifizierung und Realtime-Subscriptions für Live-Features.",
-            points: ["Auth & User Management", "Row Level Security", "Edge Functions"]
-        },
-        capacitor: {
-            title: "Capacitor 8",
-            desc: "Der native Wrapper. Erlaubt uns, die Next.js Web-App ohne Code-Duplizierung als echte iOS und Android App in die Stores zu bringen.",
-            points: ["Cross-Platform", "Native Plugin Access", "Single Codebase"]
-        },
-        webgpu: {
-            title: "WebGPU & GSAP",
-            desc: "Für den 'Wow-Faktor'. WebGPU ermöglicht hardware-beschleunigte 3D-Effekte, die den Browser nicht verlangsamen. GSAP steuert komplexe Scroll-Animationen.",
-            points: ["High-Perf Animation", "3D Atmosphere", "GPU Offloading"]
-        }
-    };
-
-    // --- Core Functions ---
-    function scrollToSection(id) {
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function highlightMetric(type) {
-        const detailEl = document.getElementById('metric-detail');
-        const map = {
-            perf: "Ziel: Core Web Vitals LCP < 2.5s, TTI < 1.5s",
-            tech: "Komplette Entfernung von WordPress & Plugins",
-            ux: "Progressive Web App + Native Stores via Capacitor",
-            db: "Migration von Google Sheets zu Postgres"
-        };
-        detailEl.textContent = map[type];
-    }
-
-    function updateStackInfo(key) {
-        const data = stackInfo[key];
-        const titleEl = document.getElementById('stack-title');
-        const descEl = document.getElementById('stack-desc');
-        const listEl = document.getElementById('stack-list');
-
-        titleEl.style.opacity = 0;
-        descEl.style.opacity = 0;
-        listEl.style.opacity = 0;
-
-        setTimeout(() => {
-            titleEl.textContent = data.title;
-            descEl.textContent = data.desc;
-            listEl.innerHTML = data.points.map(p => `<li class="flex items-center"><span class="mr-2 text-emerald-500">›</span> ${p}</li>`).join('');
-            titleEl.style.opacity = 1;
-            descEl.style.opacity = 1;
-            listEl.style.opacity = 1;
-        }, 200);
-    }
-
-    function renderRequirements(filter = 'all') {
-        const grid = document.getElementById('req-grid');
-        grid.innerHTML = '';
-        const filtered = filter === 'all' ? reqData : reqData.filter(d => d.category === filter);
-
-        filtered.forEach(item => {
-            const card = document.createElement('div');
-            card.className = "bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all";
-            
-            let badgeColor = "bg-slate-100 text-slate-600";
-            if(item.priority === "Critical") badgeColor = "bg-red-50 text-red-600 border border-red-100";
-            if(item.priority === "High") badgeColor = "bg-amber-50 text-amber-600 border border-amber-100";
-
-            card.innerHTML = `
-                <div class="flex justify-between items-start mb-3">
-                    <span class="text-xs font-bold uppercase tracking-wider ${badgeColor} px-2 py-1 rounded">${item.priority}</span>
-                    <span class="text-xs text-slate-400 capitalize">${item.category}</span>
+    <!-- Section 4: Financials & Roadmap -->
+    <section id="roadmap" class="py-16 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Roadmap -->
+                <div>
+                    <h2 class="text-3xl font-bold text-stone-900 mb-8">Migrations-Phasen</h2>
+                    <div class="space-y-8 border-l-2 border-stone-200 ml-4 pl-8 relative">
+                        <div class="relative">
+                            <div class="absolute -left-[41px] bg-amber-500 h-5 w-5 rounded-full border-4 border-white">
+                            </div>
+                            <h4 class="text-lg font-bold text-stone-900">Phase 1: Foundation (Woche 1-4)</h4>
+                            <p class="text-sm text-stone-500 mb-2">Setup & Core Architecture</p>
+                            <p class="text-stone-600 text-sm bg-white p-4 rounded-lg shadow-sm">
+                                Einrichtung Antigravity Env, Supabase Schema Design, Auth-System (SAML/Social),
+                                Grundlegendes Next.js Layout.
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[41px] bg-stone-300 h-5 w-5 rounded-full border-4 border-white">
+                            </div>
+                            <h4 class="text-lg font-bold text-stone-900">Phase 2: Core Features (Woche 5-10)</h4>
+                            <p class="text-sm text-stone-500 mb-2">LMS Logic & Migration</p>
+                            <p class="text-stone-600 text-sm bg-white p-4 rounded-lg shadow-sm">
+                                Kurs-Struktur, Video-Player Integration (Mux), Datenmigration von WordPress (User &
+                                History), Payment Gateway.
+                            </p>
+                        </div>
+                        <div class="relative">
+                            <div class="absolute -left-[41px] bg-stone-300 h-5 w-5 rounded-full border-4 border-white">
+                            </div>
+                            <h4 class="text-lg font-bold text-stone-900">Phase 3: Mobile & Polish (Woche 11-14)</h4>
+                            <p class="text-sm text-stone-500 mb-2">App Stores & Launch</p>
+                            <p class="text-stone-600 text-sm bg-white p-4 rounded-lg shadow-sm">
+                                Capacitor Build (iOS/Android), Push Notifications, Offline Sync, Beta-Testing, Final
+                                Deployment auf Hostinger Cloud.
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="font-bold text-slate-900 mb-2">${item.title}</h3>
-                <p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p>
-            `;
-            grid.appendChild(card);
-        });
-    }
 
-    function filterReqs(category, event) {
-        document.querySelectorAll('.req-filter').forEach(btn => {
-            btn.classList.remove('bg-slate-200', 'text-slate-700');
-            btn.classList.add('bg-white', 'text-slate-600');
-        });
-        if (event && event.target) {
-            event.target.classList.remove('bg-white', 'text-slate-600');
-            event.target.classList.add('bg-slate-200', 'text-slate-700');
-        }
-        renderRequirements(category);
-    }
+                <!-- Budget -->
+                <div>
+                    <h2 class="text-3xl font-bold text-stone-900 mb-8">Budget Allokation</h2>
+                    <p class="text-stone-600 mb-6">
+                        Schätzung basierend auf 10.000€ Gesamtbudget (exkl. laufende Serverkosten). Fokus liegt auf
+                        Entwicklungskapazität.
+                    </p>
+                    <div class="bg-white p-6 rounded-xl border border-stone-200">
+                        <div class="chart-container">
+                            <canvas id="budgetChart"></canvas>
+                        </div>
+                        <div class="mt-6 text-center text-sm text-stone-500">
+                            *Infrastrukturkosten (Hostinger/Supabase) skalieren nutzungsbasiert.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // --- Chart Initialization ---
-    document.addEventListener('DOMContentLoaded', () => {
-        renderRequirements();
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-bold text-white text-lg">Islamstudium 3.0</span>
+                <p class="text-xs mt-1">Technische Spezifikation v1.0</p>
+            </div>
+            <div class="text-sm">
+                Generiert basierend auf Requirements Specification Doc.
+            </div>
+        </div>
+    </footer>
 
-        // 1. Infrastructure Chart
-        const ctxInfra = document.getElementById('infraChart').getContext('2d');
-        new Chart(ctxInfra, {
-            type: 'bar',
-            data: {
-                labels: ['Performance', 'Kontrolle', 'Skalierbarkeit', 'Kosten-Effizienz'],
-                datasets: [
-                    {
-                        label: 'Shared Hosting',
-                        data: [3, 2, 3, 8],
-                        backgroundColor: 'rgba(203, 213, 225, 0.5)',
-                        borderColor: 'rgba(203, 213, 225, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Hostinger VPS KVM 4',
-                        data: [9, 10, 9, 7],
-                        backgroundColor: 'rgba(16, 185, 129, 0.6)',
-                        borderColor: 'rgba(5, 150, 105, 1)',
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: { beginAtZero: true, max: 10 }
+    <script>
+        // --- State Management ---
+        const appState = {
+            currentRole: 'student',
+            progress: 0,
+            techDetails: {
+                'nextjs': {
+                    title: 'Next.js 15 (App Router)',
+                    desc: 'Nutzt React Server Components für extrem schnelles Laden. Ermöglicht SEO-Optimierung für öffentliche Kurse und statischen Export wo möglich.',
+                    icon: 'fa-layer-group',
+                    color: 'text-stone-800'
                 },
-                plugins: {
-                    legend: { position: 'bottom' }
+                'supabase': {
+                    title: 'Supabase (PostgreSQL)',
+                    desc: 'Ersetzt das langsame WordPress WP_Meta System. Bietet Row Level Security (RLS) für Datenschutz und integrierte Auth (Login/Register).',
+                    icon: 'fa-database',
+                    color: 'text-green-600'
+                },
+                'capacitor': {
+                    title: 'Capacitor 8',
+                    desc: 'Bridge-Technologie, die die Web-App in native iOS/Android Apps verpackt. Zugriff auf Kamera, Push-Nachrichten und Filesystem.',
+                    icon: 'fa-mobile-alt',
+                    color: 'text-blue-500'
+                },
+                'antigravity': {
+                    title: 'Google Antigravity',
+                    desc: 'Agent-First IDE. Ermöglicht schnelle Iterationen durch KI-gestützte Code-Generierung und automatisiertes Refactoring.',
+                    icon: 'fa-robot',
+                    color: 'text-purple-600'
+                },
+                'hostinger': {
+                    title: 'Hostinger KVM VPS',
+                    desc: 'Kosteneffiziente, skalierbare Hosting-Lösung (NVMe Storage) für das Node.js Backend und Datenbank-Replikation.',
+                    icon: 'fa-server',
+                    color: 'text-indigo-600'
+                },
+                'mux': {
+                    title: 'Mux Video',
+                    desc: 'API-first Video Streaming. Adaptive Bitrate Streaming (kein Puffern) und detaillierte Analytics über Sehverhalten.',
+                    icon: 'fa-play-circle',
+                    color: 'text-pink-500'
+                }
+            },
+            roleContent: {
+                'student': {
+                    title: 'Das Studenten-Dashboard',
+                    text: 'Zentraler Hub für den Lernfortschritt. Fokus auf Motivation durch Visualisierung.',
+                    features: ['"Islamstudium 3.0" Lehrplan-Tracker', 'Gamification (Badges, Streaks)', 'Offline-Video Download (Mobile)', 'Persönliche Notizen & Lesezeichen']
+                },
+                'mentor': {
+                    title: 'Mentoren-Cockpit',
+                    text: 'Effiziente Verwaltung von Mentees. Automatisierte Alarme bei Inaktivität.',
+                    features: ['Übersicht aller zugewiesenen Mentees', 'Fortschritts-Analyse & Risikogruppen', 'Direkt-Nachrichten & Feedback', 'Automatisierte Reports (n8n Integration)']
+                },
+                'admin': {
+                    title: 'Admin-Zentrale',
+                    text: 'Vollständige Kontrolle über Inhalte, Benutzer und Finanzen ohne WordPress-Ballast.',
+                    features: ['User Management (RBAC)', 'Content Management (CMS)', 'Finanz-Dashboard (Stripe Sync)', 'System Health Monitoring']
                 }
             }
-        });
+        };
 
-        // 2. Roadmap Distribution Chart (Doughnut)
-        const ctxRoad = document.getElementById('roadmapDistChart').getContext('2d');
-        new Chart(ctxRoad, {
-            type: 'doughnut',
-            data: {
-                labels: ['Discovery', 'Core Dev', 'Frontend/Anim', 'Migration', 'QA/Launch'],
-                datasets: [{
-                    data: [2, 4, 3, 1, 2],
-                    backgroundColor: [
-                        '#10b981',
-                        '#3b82f6',
-                        '#8b5cf6',
-                        '#f59e0b',
-                        '#64748b'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: { 
-                        callbacks: {
-                            label: function(context) {
-                                return context.label + ': ' + context.raw + ' Wochen';
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTechDetail(techKey) {
+            const data = appState.techDetails[techKey];
+            const container = document.getElementById('tech-detail-content');
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = `
+                    <div class="text-center">
+                        <i class="fas ${data.icon} ${data.color} text-5xl mb-4"></i>
+                        <h3 class="text-xl font-bold text-stone-900 mb-2">${data.title}</h3>
+                        <p class="text-stone-600 text-sm leading-relaxed">${data.desc}</p>
+                        <div class="mt-6 pt-4 border-t border-stone-100">
+                             <span class="text-xs uppercase tracking-wider font-semibold text-stone-400">Status: Beschlossen</span>
+                        </div>
+                    </div>
+                `;
+                container.style.opacity = '1';
+                container.style.transition = 'opacity 0.3s ease';
+            }, 200);
+        }
+
+        function switchRole(role) {
+            ['student', 'mentor', 'admin'].forEach(r => {
+                const btn = document.getElementById(`tab-${r}`);
+                if (r === role) {
+                    btn.classList.remove('text-stone-500', 'hover:text-stone-900');
+                    btn.classList.add('bg-white', 'text-stone-900', 'shadow-sm');
+                } else {
+                    btn.classList.add('text-stone-500', 'hover:text-stone-900');
+                    btn.classList.remove('bg-white', 'text-stone-900', 'shadow-sm');
+                }
+            });
+
+            const data = appState.roleContent[role];
+            const container = document.getElementById('role-content');
+            container.innerHTML = `
+                <h3 class="text-2xl font-bold text-stone-900 mb-4">${data.title}</h3>
+                <p class="text-stone-600 mb-4">${data.text}</p>
+                <ul class="space-y-3">
+                    ${data.features.map(f => `<li class="flex items-center text-stone-700"><i class="fas fa-check text-amber-500 w-6"></i> ${f}</li>`).join('')}
+                </ul>
+            `;
+        }
+
+        function updateProgress(amount) {
+            const bar = document.getElementById('progress-bar');
+            const text = document.getElementById('progress-text');
+            const badge = document.getElementById('demo-badge');
+
+            let current = parseInt(bar.style.width) || 0;
+            let newProgress = current + amount;
+            if (newProgress > 100) newProgress = 100;
+
+            bar.style.width = `${newProgress}%`;
+            text.innerText = `${newProgress}%`;
+
+            if (newProgress >= 50 && newProgress < 100) {
+                badge.innerText = "Fortgeschritten";
+                badge.className = "px-3 py-1 bg-amber-600 rounded-full text-xs font-bold text-white transition-all";
+            } else if (newProgress === 100) {
+                badge.innerText = "Meister";
+                badge.className = "px-3 py-1 bg-green-600 rounded-full text-xs font-bold text-white transition-all";
+                text.innerText = "100% - Abgeschlossen!";
+            }
+        }
+
+        // --- Chart.js Initialization ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const ctxPerf = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctxPerf, {
+                type: 'bar',
+                data: {
+                    labels: ['WordPress Legacy', 'Antigravity/Supabase'],
+                    datasets: [{
+                        label: 'Datenbank Abfragezeit (ms)',
+                        data: [850, 45],
+                        backgroundColor: ['#FCA5A5', '#34D399'],
+                        borderRadius: 6,
+                        barThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    return context.parsed.y + ' ms (Durchschnitt)';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Millisekunden (ms)' },
+                            grid: { color: '#F3F4F6' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            const ctxBudget = document.getElementById('budgetChart').getContext('2d');
+            new Chart(ctxBudget, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Entwicklung (Frontend/Backend)', 'Design & UI', 'Infrastruktur Setup', 'Migration Tools & 3rd Party'],
+                    datasets: [{
+                        data: [5500, 2000, 1500, 1000],
+                        backgroundColor: ['#334155', '#B45309', '#94A3B8', '#CBD5E1'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: { family: 'Inter', size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    let label = context.label || '';
+                                    if (label) label += ': ';
+                                    label += context.parsed + '€';
+                                    return label;
+                                }
                             }
                         }
                     }
-                },
-                cutout: '70%'
-            }
-        });
-    });
-</script>
+                }
+            });
 
+            showTechDetail('nextjs');
+        });
+    </script>
 </body>
+
 </html>
